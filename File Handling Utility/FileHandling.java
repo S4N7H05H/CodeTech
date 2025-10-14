@@ -5,47 +5,42 @@ public class FileHandling {
     public static void Write(String filename, String content) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write(content);
-            System.out.println("Successfully written to file : " + filename);
+            System.out.println("**Successfully written to file " + filename);
         } catch (IOException e) {
-            System.out.println("Error :" + e.getMessage());
+            System.out.println("**Error : " + e.getMessage());
         }
     }
 
     public static void Read(String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
-            System.out.println("Reading the file "+filename);
+            System.out.println("**Reading the file "+filename);
             while((line = reader.readLine())!=null){
-                System.out.print("  "+line);
+                System.out.println("  "+line);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File not found.."+e.getMessage());
+            System.out.println("**File not found : "+e.getMessage());
         } catch (IOException e) {
-            System.out.println("Error : "+e.getMessage());
+            System.out.println("**Error : "+e.getMessage());
         }
-        
-    }
-
-    public static void Modify(String filemane, String oldtext, String newtext) {
-
         
     }
     
     public static void Append(String filename,String content) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
-            writer.write(content);
-            System.out.println("Content appended Successfully.");
+            writer.write(" "+content);
+            System.out.println("**Content appended Successfully.");
         } catch (IOException e) {
-            System.out.println("Error : "+e.getMessage());
+            System.out.println("**Error : "+e.getMessage());
         }
     }
 
     public static void Delete(String filename) {
         File file = new File(filename);
         if(file.delete())
-            System.out.println("File deleted Successfully");
+            System.out.println("**File deleted Successfully");
         else{
-            System.out.println("Error in deleting the file.");
+            System.out.println("**Error in deleting the file.");
         }
     }
 
@@ -53,15 +48,14 @@ public class FileHandling {
         Scanner sc = new Scanner(System.in);
         String filename,content;
 
-        System.out.println(" FILE HANDLING UTILITY ");
+        System.out.println(" **FILE HANDLING UTILITY** ");
         while (true) {
             System.out.println("1.Write to File");
             System.out.println("2.Read from File");
-            //System.out.println("3.Modify File (Replace Text)");
-            System.out.println("4.Append to File");
-            System.out.println("5.Delete File");
-            System.out.println("6.Exit");
-            System.out.print("Enter your choice (1-6): ");
+            System.out.println("3.Append to File");
+            System.out.println("4.Delete File");
+            System.out.println("5.Exit");
+            System.out.print("Enter your choice (1-5): ");
             int choice = sc.nextInt();
 
             switch (choice) {
@@ -75,21 +69,13 @@ public class FileHandling {
                     Write(filename, content);
                 }
                 case 2 -> {
-                    System.out.println("Enter the filename(with extension) : ");
+                    sc.nextLine();
+                    System.out.print("Enter the filename(with extension) : ");
                     filename = sc.nextLine();
                     Read(filename);
                 }
+                
                 case 3 -> {
-                    sc.nextLine();
-                    System.out.print("Enter the filename to Modify(with extension) : ");
-                    filename = sc.nextLine();
-                    System.out.println("Enter the old content : ");
-                    String OldText = sc.nextLine();
-                    System.out.println("Enter the new content to Modify : ");
-                    content = sc.nextLine();
-                    Modify(content, OldText, content);
-                }
-                case 4 -> {
                     sc.nextLine();
                     System.out.print("Enter the filename(With extension) :");
                     filename = sc.nextLine();
@@ -98,13 +84,13 @@ public class FileHandling {
                     content = sc.nextLine();
                     Append(filename, content);
                 }
-                case 5 -> {
+                case 4 -> {
                     sc.nextLine();
                     System.out.print("Enter the file name to delete(with extension) :");
                     filename = sc.nextLine();
                     Delete(filename);
                 }
-                case 6 ->{
+                case 5 ->{
                     System.out.println("Exiting Program..");
                     sc.close();
                     System.exit(0);
